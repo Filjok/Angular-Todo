@@ -1,0 +1,53 @@
+<section class="heading-section">
+    <h1 class="title is-1 has-text-centered">Todos</h1>
+</section>
+
+<div class="container add-todo-box-container">
+    <div class="add-todo-box">
+
+        <form #form="ngForm" (ngSubmit)="onFormSubmit(form)">
+
+            <h2 class="title is-5">new Todo</h2>
+
+            <div class="field is-grouped " style="margin: 0;">
+                <p class="control is-expanded">
+                    <input ngModel #todoTextField="ngModel" required name="text" class="input" type="text" minlength="2"
+                        placeholder="add todo">
+                </p>
+                <p>
+                    <button class="button alt-gradient-button">
+                        <i class="material-icons">add</i>
+                        Add
+                    </button>
+                </p>
+            </div>
+
+            <div *ngIf="todoTextField.invalid &&  showValidationErrors">
+
+                <p class="help is-danger" *ngIf="todoTextField.errors?.['required']">Please insert text First</p>
+                <p class="help is-danger" *ngIf="todoTextField.errors?.['minlength']">The text must be more than 1
+                    character</p>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="todos-list">
+
+            <app-todo-item 
+            *ngFor="let todo of todos"
+             [todo]="todo"
+              (todoClicked)="toggleCompleted(todo)"
+              (editClicked)="editTodo(todo)"
+              (deleteClicked)="deleteTodo(todo)"
+              >
+              
+            </app-todo-item>
+
+        </div>
+    </div>
+</section>
